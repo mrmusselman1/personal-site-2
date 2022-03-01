@@ -1,1 +1,161 @@
-<h1>Hello World</h1>
+<style>
+    .modal-dialog{
+            width:100%;
+            max-width:920px;
+    }
+
+    .modal-body {
+            padding-top:0px;
+            padding-bottom:0px;
+    }
+
+    .modal-footer {
+            margin-top:0px;
+    }
+
+    #pdf{
+            max-height:100%;
+            min-height:400px;
+    }
+
+    /* Added to fix a weird horixontal scroll artifact when clicking nav links */
+    .navbar-collapse {
+        overflow-x: hidden;
+    }
+    </style>
+
+    <!-- <?php /* Yell at IE users */ if($ieAlert) : ?>
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>Oh no!</strong> Looks like you are using Internet Explorer!
+            How about you download a nicer browser such as
+            <a href="http://www.google.com/chrome">Google Chrome</a>?
+        </div>
+    <?php endif; ?> -->
+
+    <h3 id="about" class="subhead">About Me</h3>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 text-center">
+            <p>
+                I am a Software Engineer at
+                <a href="https://www.simventions.com" target="_blank">SimVentions</a>
+                and a former Software Engineer at
+                <a href="https://andculture.com/" target="_blank">Andculture</a>.
+            </p>
+            <p>
+                I graduated  from <a href="http://www.messiah.edu">Messiah College</a>
+                with a Bachelor's degree in Computer and Information Sciences in 2014.
+            </p>
+            <!--<p>
+                In my spare time I like to volunteer at my church helping out in all facets of the
+                technical arts, including sound, lighting, and projection. I also maintain and manage my own
+                Minecraft server with the help of my younger brother.
+            </p>-->
+        </div> <!-- /.col-md-10 -->
+    </div> <!-- /.row -->
+
+    <div class="sect-border"></div>
+
+    <h3 id="links" class="subhead">Connect with Me</h3>
+    <div class="row">
+        <div class="col-md-4 col-sm-4 benefit">
+            <a href="https://www.linkedin.com/in/mrmusselman">
+                <div class="benefit-ball">
+                    <!--<span class="glyphicon glyphicon-link"></span>-->
+                    <span class="fa fa-linkedin" style="font-size:64px">
+                </div>
+            </a>
+            <h3>LinkedIn</h3>
+            <p>Connect with me on LinkedIn.</p>
+        </div> <!-- /.benefit -->
+
+
+        <!-- Resume Button that triggers modal for md and lg -->
+        <div class="col-md-4 visible-md visible-lg benefit">
+                <a href="#resume_modal" data-toggle="modal">
+                <div class="benefit-ball">
+                    <span class="glyphicon glyphicon-file"></span>
+                </div>
+            </a>
+            <h3>My Resume</h3>
+            <p>Click for a PDF of my Resume.</p>
+        </div> <!-- /.benefit -->
+
+        <!-- Resume Button as download for xs and sm -->
+        <div class="col-sm-4 visible-sm visible-xs benefit">
+                <a href="/files/MusselmanMatthewR_Resume.pdf">
+                <div class="benefit-ball">
+                    <span class="glyphicon glyphicon-file"></span>
+                </div>
+            </a>
+            <h3>My Resume</h3>
+            <p>Click for a PDF of my Resume.</p>
+        </div> <!-- /.benefit -->
+
+
+        <div class="col-md-4 col-sm-4 benefit">
+            <a href="mailto:info@MatthewRMusselman.com">
+                <div class="benefit-ball">
+                    <span class="glyphicon glyphicon-inbox"></span>
+                </div>
+            </a>
+            <h3>E-mail Me</h3>
+            <p>Send me an e-mail.</p>
+        </div> <!-- /.benefit -->
+    </div> <!-- /.row -->
+
+    <div class="row">
+        <div class="col-md-6 col-md-push-1 col-sm-6 col-sm-push-1 benefit">
+            <a href="/minecraft">
+                <div class="benefit-ball">
+                    <span class="glyphicon glyphicon-tree-deciduous"></span>
+                </div>
+            </a>
+            <h3>Minecraft Site</h3>
+            <p>Click here to access the Minecraft Site.</p>
+        </div> <!-- /.benefit -->
+
+
+        <div class="col-md-6 col-md-pull-1 col-sm-6 col-sm-pull-1 benefit">
+            <a href="/cube">
+                <div class="benefit-ball">
+                    <span class="glyphicon glyphicon-th"></span>
+                </div>
+            </a>
+            <h3>Rubik's Cube</h3>
+            <p>A fun project from a class at Messiah College.</p>
+        </div> <!-- /.benefit -->
+    </div> <!-- /.row -->
+
+    <script>
+      $(".nav-link").click(function(e) {
+
+           e.preventDefault();
+           var link = $(this);
+           var href = link.attr("href");
+           $("html,body").animate({scrollTop: $(href).offset().top - 80}, 500);
+           link.closest(".navbar").find(".navbar-toggle:not(.collapsed):not(.modal-button)").click();
+
+      });
+    </script>
+
+    <!-- Resume Modal Template -->
+    <div class="modal fade" id="resume_modal" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">&nbsp;</h4>
+                </div>
+                <div class="modal-body">
+                    <object id="pdf" data="/files/MusselmanMatthewR_Resume.pdf" type="application/pdf" width="100%" height="100%">
+                        <p>Oops! Your browser doesn't support previewing my resume. <a href="/files/MusselmanMatthewR_Resume.pdf">Click to download</a>.</p>
+                    </object>
+                </div>
+                <div class="modal-footer">
+                    <a href="/files/MusselmanMatthewR_Resume.pdf">Download a Copy</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end Resume Modal Template -->

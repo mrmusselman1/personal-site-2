@@ -1,0 +1,42 @@
+<div class="text-center">
+    <h1>Cool Cube</h1>
+    <div id="content" style="width:400px; margin: 0 auto;">
+    <?php if(!$this->isIE) : ?>
+        <script src="/js/cube/cis487.js"></script>			
+        <script src="/js/cube/shape.js"></script>
+        <canvas id="canvas" width="400" height="300" style="border-radius: 25px;"></canvas>
+        <button class="btn btn-default btn-sm" onclick="press(INR)">Inner Stuff</button>    
+        <div class="btn-group" role="group" aria-label="...">
+            <button class="btn btn-default btn-sm" onclick="press(ROT)">Rotate Toggle</button>
+            <button class="btn btn-default btn-sm" onclick="press(SLW)">Slower</button>
+            <button class="btn btn-default btn-sm" onclick="press(FST)">Faster</button>
+        </div>
+        <button class="btn btn-default btn-sm" onclick="main()">Reset</button>
+        <script>
+            //Send the button press to the shape.js
+            var ROT = 1,
+                MOV = 2,
+                INR = 3,
+                SLW = 4,
+                FST = 5;
+
+            function press(type) {
+                if (type === ROT) {
+                        rotToggle();
+                } else if (type === MOV) {
+                        movToggle();
+                } else if (type === INR) {
+                        innerToggle();
+                } else if (type === FST) {
+                        faster();
+                } else if (type === SLW) {
+                        slower();
+                }
+            }
+            main();
+        </script>
+    <?php else : ?>
+        <p>Sorry, your browser is not supported. Try <a href="http://www.google.com/chrome/">Chrome</a> or <a href="http://www.firefox.com">Firefox</a>!</p>
+    <?php endif; ?>
+    </div>
+</div>

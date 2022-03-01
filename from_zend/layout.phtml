@@ -1,0 +1,142 @@
+<?php
+// ==================== layout for Home Module ==================== //
+$relPath = str_replace($this->serverUrl(), '', $this->serverUrl(true));
+$home = (strcmp("/", $relPath) == 0);
+?>
+
+<?php echo $this->doctype(); ?>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <?php echo $this->headTitle('MatthewRMusselman.com') ?>
+
+    <?php echo $this->headMeta()
+        ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+        ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+    ?>
+
+    <!-- Styles -->
+    <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/m.png'))
+        //->prependStylesheet($this->basePath() . '/css/style.css')
+        //->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
+        //->prependStylesheet($this->basePath() . '/css/fa_abridged.css')
+        ->prependStylesheet($this->basePath() . '/css/font-awesome.css')
+        ->prependStylesheet($this->basePath() . '/css/strapped.css')
+        ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css')
+        ->prependStylesheet($this->basePath() . '/css/home/home.css')
+    ?>
+    
+    <!-- Scripts -->
+    <?php echo $this->headScript()
+        ->prependFile($this->basePath() . '/js/bootstrap.min.js')
+        ->prependFile($this->basePath() . '/js/jquery.min.js')
+        ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+        ->prependFile($this->basePath() . '/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',))
+    ; ?>
+
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top" id="myNavBar" role="navigation">
+        <div class="container">
+            <div class="navbar-header">                
+                <?php if($this->zfcUserIdentity() && !$home) : ?>
+                <a href="/" class="navbar-toggle pull-left" style="height:34px; margin-left:15px;">
+                    <span class="glyphicon glyphicon-home" style="color:white;"></span>
+                </a>
+                <a href="/" class="navbar-brand nav-link hidden-xs" style="height:34px; margin-left:15px;">
+                    <span class="glyphicon glyphicon-home" style="color:white;"></span>
+                </a>
+                <?php endif; ?>
+                
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                
+                
+                <!-- class name causes issues -->
+                <button class="navbar-toggle modal-button" style="height:34px;" data-toggle="modal" data-target="#userAccountModal">
+                <?php if($this->zfcUserIdentity()) : ?>                
+                    <span class="glyphicon glyphicon-user" style="color:white;"></span>                
+                <?php else : ?>
+                    <span class="glyphicon glyphicon-lock" style="color:white;"></span>                
+                <?php endif; ?>
+                </button>   
+                
+            </div> <!-- /.navbar-header -->
+
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav navbar-right">                    
+                    <?php if($home) : // Just Home Page ?> 
+                    <li><a href="#top" class="nav-link">Home</a></li>
+                    <li><a href="#about" class="nav-link">About Me</a></li>
+                    <li><a href="#links" class="nav-link">Connect</a></li>                    
+                    <li><a href="https://www.linkedin.com/in/mrmusselman">LinkedIn</a></li>
+                    <?php elseif($this->zfcUserIdentity()) : //Authenticated Users ?>    
+                    <li><a href="/app" class="nav-link">Home</a></li>    
+                    <li><a href="/car" class="nav-link">Car</a></li>    
+                    <?php else: //Non auth'd other pages ?>
+                    <li><a href="/" class="nav-link">Home</a></li>                                
+                    <?php endif; // All pages ?>
+                    <li>                                                                
+                        <a href data-toggle="modal" data-target="#userAccountModal">
+                            <span class="glyphicon glyphicon-<?php echo ($this->zfcUserIdentity() ? 'user' : 'lock'); ?>"></span>
+                            <?php if($this->zfcUserIdentity()) : ?>                                
+                            <span sstyle="display: inline-block !important;"><?php echo $this->zfcUserIdentity()->getUserName(); ?></span>
+                            <?php endif; ?>
+                        </a>
+                    </li>
+                </ul>
+            </div> <!-- /.navbar-collapse -->
+        </div> <!-- /.container -->
+    </nav> <!-- /.navbar -->
+
+    <?php if($home) : ?>
+        <div id="top" class="jumbotron">
+            <div class="container">
+                    <h1>Matthew R. Musselman</h1>
+            </div> <!-- /.container -->
+        </div> <!-- /.jumbotron -->
+    <?php else : ?>
+            <div style="height: 79px;"></div>
+    <?php endif; ?>
+                       
+    <!-- BEGIN VIEW CONTENT -->
+    <div class="container" style="margin-bottom: 70px;">
+        <?php echo $this->content; ?>
+    </div> <!-- end main container -->
+    <!-- END VIEW CONTENT -->
+  
+    <footer class="navbar-fixed-bottom">
+        <div class="container clearfix">
+            <p class="pull-left">&copy; 2014 - 
+                <?php echo date('Y', time()); ?>
+                <a href="mailto:info@matthewrmusselman.com">matthewRmusselman.com</a>	
+            </p>
+            <!--<p class="pull-right">Built with 
+                <a href="http://getbootstrap.com/">Bootstrap</a>,  
+                <a href="http://www.bootstrapzero.com/bootstrap-template/strapped-template">Strapped</a>, and
+                <a href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a>
+            </p>-->
+        </div> <!-- /.container -->
+    </footer>
+    <?php echo $this->inlineScript() ?>
+    
+    <style>
+        .modal-dialog-center {
+            /*top: 25%; this makes click to dismiss not work */
+            padding-top: 20%;
+        }
+    </style>
+    <div class="modal fade modal-dialog-center" id="userAccountModal">            
+        <?php 
+            if(!$this->zfcUserIdentity()) {
+                echo $this->zfcUserLoginWidget();
+            } else {                
+                echo $this->partial('zfc-user/user/index.phtml', array());  
+            }
+        ?>
+    </div><!-- end modal -->
+</body>
+</html>
